@@ -166,6 +166,8 @@ def keyword_detection():
         try:
             t = time.time()
             said = r.recognize_google(audio).lower()
+            if said:
+                print("Heard something")
             if "corgi" in said or "corgee" in said or "corgy" in said or "corgo" in said or "cargo" in said:
                 play_audio("data/sound_effects/corgi_bark.mp3")
                 print('detected')
