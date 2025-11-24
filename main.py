@@ -174,7 +174,7 @@ def keyword_detection():
             pass
     return
 
-def get_user_audio_query_from_microphone():
+def get_user_audio_query_from_microphone(hotword):
     r = sr.Recognizer()
     with sr.Microphone() as source:
         audio = r.listen(source, phrase_time_limit=2 if hotword else 5)
@@ -188,9 +188,9 @@ def get_user_audio_query_from_microphone():
     return
 
 def get_user_audio_query():
-    query_from_phone = get_user_audio_query_from_phone()
-    if query_from_phone is not None:
-        return query_from_phone
+    # query_from_phone = get_user_audio_query_from_phone()
+    # if query_from_phone is not None:
+    #     return query_from_phone
     if get_user_audio_query_from_microphone(hotword=True):
         return get_user_audio_query_from_microphone(hotword=False)
 
