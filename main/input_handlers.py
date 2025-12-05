@@ -21,8 +21,8 @@ class AudioInputHandler:
 
 class MicrophoneAudioInputHandler(AudioInputHandler):
     def __init__(self):
-        self.hotwords = ["corgi", "corgee", "corgy", "corgo", "cargo"]
-        self.bark_path = "/home/sdevarakonda/projects/repos/corgi_home_assistant/data/sound_effects/corgi_bark.mp3"
+        self.hotwords = ["hat", "sorting hat", "hot", "hey hat"]
+        self.byte_path = "../data/sound_effects/yer-a-wizard-harry.mp3"
 
     async def keyword_detection(self):
         r = sr.Recognizer()
@@ -33,7 +33,7 @@ class MicrophoneAudioInputHandler(AudioInputHandler):
                 said = said.lower()
 
                 if any(hotword in said for hotword in self.hotwords):                
-                    await asyncio.to_thread(play_audio, self.bark_path)
+                    await asyncio.to_thread(play_audio, self.byte_path)
                     return True
             except sr.UnknownValueError:
                 # Ignore if speech recognition couldn't understand the audio
