@@ -2,10 +2,10 @@ import asyncio
 import time
 import os
 
-from corgo.input_handlers import get_user_query
-from corgo.agents import OpenWebUIAgent
-from corgo.tts_models import OpenAISTTModel
-from corgo.audio_utils import play_audio
+from theHat.input_handlers import get_user_query
+from theHat.agents import OpenWebUIAgent
+from theHat.tts_models import OpenAISTTModel
+from theHat.audio_utils import play_audio
 
 
 async def main():
