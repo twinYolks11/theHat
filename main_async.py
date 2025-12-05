@@ -7,6 +7,8 @@ from theHat.agents import OpenWebUIAgent
 from theHat.tts_models import OpenAISTTModel
 from theHat.audio_utils import play_audio
 
+from google import genai
+
 
 async def main():
     # Get user query
@@ -16,10 +18,13 @@ async def main():
 
     # Get agent response
     t = time.time()
-    agent = OpenWebUIAgent()
-    response = agent.get_response(query)
-    print(f"Response: {response}")
-    print(f"Time taken = {time.time() - t:.2f} sec")
+    # agent = OpenWebUIAgent()
+    # response = agent.get_response(query)
+    # print(f"Response: {response}")
+    # print(f"Time taken = {time.time() - t:.2f} sec")
+    client = genai.Client()
+    response = client.models.generate_content(model="gemini-2.5-flash", contents=query)
+    print(response)
 
     # Convert response to audio
     t = time.time()
