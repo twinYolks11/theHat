@@ -31,8 +31,8 @@ async def main():
     client = genai.Client()
     transcript = client.models.generate_content(
         model="gemini-2.5-flash",
-        contents='generate an answer to the following question like it was asked' \
-        ' by a wizard from hogwarts and answered by the sorting hat. But dont repeat the question: ' + query
+        contents='respond to the following question with a concise answer of 100 words or less' \
+        ' as if it was answered by the sorting hat from hogwarts: ' + query
     ).text
 
     response = client.models.generate_content(
