@@ -10,7 +10,6 @@ from theHat.audio_utils import play_audio
 from google import genai
 from google.generativeai.types import GenerateContentConfig
 
-
 async def main():
     # Get user query
     t = time.time()
@@ -30,7 +29,7 @@ async def main():
     # print(f"Response: {response}")
     # print(f"Time taken = {time.time() - t:.2f} sec")
     client = genai.Client()
-    response = client.models.generate_content(model="gemini-2.5-flash", contents=query, generation_config=config)
+    response = client.models.generate_content(model="gemini-2.5-flash-tts", contents=query, generation_config=config)
     #print(response)
 
     # Convert response to audio
