@@ -43,8 +43,9 @@ async def main():
 
     client = genai.Client()
     response = client.models.generate_content(
-        model="gemini-2.5-flash-preview-tts", 
-        contents=query,
+        model="gemini-2.5-flash-tts", 
+        contents='in your best harry potter sorting hat impression, relay the following information. ' \
+        'Address the listener as the sorting hat would a student of hogwarts: ' + query,
         config=config
     )
 
