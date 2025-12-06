@@ -1,6 +1,7 @@
 import asyncio
 import time
 import os
+import wave
 
 from theHat.input_handlers import get_user_query
 from theHat.agents import OpenWebUIAgent
@@ -8,7 +9,15 @@ from theHat.tts_models import OpenAISTTModel
 from theHat.audio_utils import play_audio
 
 from google import genai
-from google.generativeai.types import GenerateContentConfig
+from google.genai import types
+
+# Set up the wave file to save the output:
+def wave_file(filename, pcm, channels=1, rate=24000, sample_width=2):
+   with wave.open(filename, "wb") as wf:
+      wf.setnchannels(channels)
+      wf.setsampwidth(sample_width)
+      wf.setframerate(rate)
+      wf.writeframes(pcm)
 
 async def main():
     # Get user query
@@ -20,31 +29,31 @@ async def main():
     t = time.time()
 
     #configure the content generation to request audio output
-    config = GenerateContentConfig(
-        response_modalities=['AUDIO']
+    speech_config = types.SpeechConfig(
+         voice_config=types.VoiceConfig(
+            prebuilt_voice_config=types.PrebuiltVoiceConfig(
+               voice_name='Sadaltager',
+            )
+         )
+    )
+    config = types.GenerateContentConfig(
+        response_modalities=['AUDIO'],
+        speech_config=speech_config
     )
 
-    # agent = OpenWebUIAgent()
-    # response = agent.get_response(query)
-    # print(f"Response: {response}")
-    # print(f"Time taken = {time.time() - t:.2f} sec")
     client = genai.Client()
-    response = client.models.generate_content(model="gemini-2.5-flash-tts", contents=query, generation_config=config)
-    #print(response)
+    response = client.models.generate_content(
+        model="gemini-2.5-flash-tts", 
+        contents=query, 
+        generation_config=config
+    )
 
     # Convert response to audio
     t = time.time()
-    # output_path = f"agent_reponse.mp3"
-    # model_tts = OpenAISTTModel()
-    # model_tts.generate_audio(response, output_path)
 
-    if response.audio:
-        audio_file_path="output_audio.mp3"
-        with open(audio_file_path, "wb") as f:
-            f.write(response.audio.data)
-            print(f"Audio saved to {audio_file_path}")
-    else:
-        print("No audio data received in the response")
+    audio_out = response.candidates[0].content.parts[0].inline_data.data
+    audio_file_path='response.wav'
+    wave_file(audio_file_path, audio_out)
     print(f"Time taken = {time.time() - t:.2f} sec")
 
     # Play agent response
