@@ -32,7 +32,7 @@ async def main():
     transcript = client.models.generate_content(
         model="gemini-2.5-flash",
         contents='generate an answer to the following question like it was asked' \
-        ' by a wizard from hogwarts and answered by the sorting hat: ' + query
+        ' by a wizard from hogwarts and answered by the sorting hat. But dont repeat the question: ' + query
     ).text
 
     response = client.models.generate_content(
