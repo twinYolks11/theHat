@@ -43,9 +43,9 @@ async def main():
 
     client = genai.Client()
     response = client.models.generate_content(
-        model="gemini-2.5-flash-tts", 
-        contents=query, 
-        generation_config=config
+        model="gemini-2.5-flash-preview-tts", 
+        contents=query,
+        config=config
     )
 
     # Convert response to audio
