@@ -28,25 +28,26 @@ async def main():
     # Get agent response
     t = time.time()
 
-    #configure the content generation to request audio output
-    speech_config = types.SpeechConfig(
-         voice_config=types.VoiceConfig(
-            prebuilt_voice_config=types.PrebuiltVoiceConfig(
-               voice_name='Sadaltager',
-            )
-         )
-    )
-    config = types.GenerateContentConfig(
-        response_modalities=['AUDIO'],
-        speech_config=speech_config
-    )
-
     client = genai.Client()
+    transcript = client.models.generate_content(
+        model="gemini-2.5-flash",
+        contents='generate an answer to the following question like it was asked' \
+        ' by a wizard from hogwarts and answered by the sorting hat: ' + query
+    ).text
+
     response = client.models.generate_content(
-        model="gemini-2.5-flash-tts", 
-        contents='in your best harry potter sorting hat impression, relay the following information. ' \
-        'Address the listener as the sorting hat would a student of hogwarts: ' + query,
-        config=config
+        model="gemini-2.5-flash-preview-tts", 
+        contents=transcript,
+        config=types.GenerateContentConfig(
+            response_modalities=['AUDIO'],
+            speech_config=types.SpeechConfig(
+                voice_config=types.VoiceConfig(
+                    prebuilt_voice_config=types.PrebuiltVoiceConfig(
+                        voice_name='Sadaltager',
+                    )
+                )
+            )
+        )
     )
 
     # Convert response to audio
