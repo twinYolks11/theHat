@@ -22,7 +22,7 @@ class AudioInputHandler:
 class MicrophoneAudioInputHandler(AudioInputHandler):
     def __init__(self):
         self.hotwords = ["hat", "sorting hat", "hot"]
-        self.byte_path = "../data/sound_effects/spell.mp3"
+        self.byte_path = "data/sound_effects/spell.mp3"
 
     async def keyword_detection(self):
         r = sr.Recognizer()
