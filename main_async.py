@@ -31,7 +31,7 @@ async def main():
     client = genai.Client()
     transcript = client.models.generate_content(
         model="gemini-2.5-flash",
-        contents='respond to the following question with a concise answer of 100 words or less' \
+        contents='respond to the following question with a concise answer of 50 words or less' \
         ' as if it was answered by the sorting hat from hogwarts: ' + query
     ).text
 

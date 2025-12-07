@@ -21,8 +21,8 @@ class AudioInputHandler:
 
 class MicrophoneAudioInputHandler(AudioInputHandler):
     def __init__(self):
-        self.hotwords = ["hat", "sorting hat", "hot", "hey hat"]
-        self.byte_path = "../data/sound_effects/yer-a-wizard-harry.mp3"
+        self.hotwords = ["hat", "sorting hat", "hot"]
+        self.byte_path = "../data/sound_effects/spell.mp3"
 
     async def keyword_detection(self):
         r = sr.Recognizer()
